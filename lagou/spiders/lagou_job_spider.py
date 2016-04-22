@@ -14,10 +14,11 @@ class LagouJobSpider(scrapy.Spider):
     name = 'lagou'
     allowed_domains = ['lagou.com']
     start_urls = [
-        'http://www.lagou.com/zhaopin/C++/',
+        'http://www.lagou.com/jobs/1396934.html?source=home_hot&i=home_hot-0',
+        #  'http://www.lagou.com/zhaopin/C++/',
     ]
 
-    def parse(self, response):
+    def parse_list(self, response):
         job_links = response.xpath('//li[@class="con_list_item"]/div/div/div/a[@class="position_link"]')
         print job_links
         for a in job_links:
@@ -25,7 +26,7 @@ class LagouJobSpider(scrapy.Spider):
             print href
 
 
-    def parse_item(self, response):
+    def parse(self, response):
         item = LagouItem()
 
         title = response.xpath('//dl[@id="job_detail"]/dt/h1/@title').extract()
